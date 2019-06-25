@@ -1,0 +1,8 @@
+# ignore all log files (example)
+*.logs
+
+# ignore folder named 'node_modules'
+casadocodigo/node_modules/
+
+# Ignore file named 'README.txt' (example)
+README.txt

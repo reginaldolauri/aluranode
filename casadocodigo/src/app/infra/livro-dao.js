@@ -35,14 +35,26 @@ class LivroDao{
                 'SELECT * FROM livros',
                 (erro, resultados) => {
                     if (erro) return reject('Não foi possível listar os livros.')
-                    
+
                     return resolve(resultados);
                 }
             )
         });
     }
 
-    
+    buscaPorId(id){
+        return new Promise((resolve, reject) => {
+            this._db.all(
+                `SELECT * FROM livros where id = ?`,
+                (erro, resultado) =>{
+                    if (erro) 
+                        return reject('Não foi possível encontrar o livro de id: ${id}')
+                    
+                    return resolve(resultado);
+                }
+            )
+        });
+    }
 }
 
 module.exports = LivroDao;
