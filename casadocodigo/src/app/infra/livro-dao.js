@@ -18,9 +18,9 @@ class LivroDao{
                     livro.preco,
                     livro.descricao
                 ],
-                function(err) {
-                    if (err) {
-                        console.log(err);
+                erro => {
+                    if (erro) {
+                        console.log(erro);
                         return reject('Não foi possível adicionar o livro!');
                     }
                     resolve();
@@ -44,15 +44,48 @@ class LivroDao{
 
     buscaPorId(id){
         return new Promise((resolve, reject) => {
-            this._db.all(
+            this._db.get(
                 `SELECT * FROM livros where id = ?`,
-                (erro, resultado) =>{
+                [id],
+                (erro, livro) =>{
                     if (erro) 
-                        return reject('Não foi possível encontrar o livro de id: ${id}')
+                        return reject('Não foi possível encontrar o livro de id: ${id}');
                     
-                    return resolve(resultado);
+                    return resolve(livro);
                 }
             )
+        });
+    }
+
+    atualiza(livro){
+        return new Promise((resolve, reject) => {
+            this._db.run(`UPDATE livros SET
+                            titulo = ?,
+                            preco = ?
+                            descricao = ?
+                            where id = ?`,
+            [
+                livro.titulo,
+                livro.preco,
+                livro.descricao
+            ],
+            erro => {
+                if(erro)
+                    return reject('Não foi possível atualizar o livro: ${livro.id}');
+                return resolve();
+            })
+        });
+    }
+
+    remove(id){
+        return new Promise((resolve, reject) => {
+            this._db.get(`DELETE FROM livros WHERE id = ?`),
+            [id],
+            erro => {
+                if(erro) 
+                    return reject('Não foi possível remover o livro: ${id}');
+                return  resolve();
+            }
         });
     }
 }
