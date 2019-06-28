@@ -24,8 +24,7 @@ class LivroDao{
                         return reject('Não foi possível adicionar o livro!');
                     }
                     resolve();
-                }
-            )
+                });
         });
     }
 
@@ -37,8 +36,7 @@ class LivroDao{
                     if (erro) return reject('Não foi possível listar os livros.')
 
                     return resolve(resultados);
-                }
-            )
+                });
         });
     }
 
@@ -49,11 +47,10 @@ class LivroDao{
                 [id],
                 (erro, livro) =>{
                     if (erro) 
-                        return reject('Não foi possível encontrar o livro de id: ${id}');
+                        return reject(`Não foi possível encontrar o livro de id: ${id}`);
                     
                     return resolve(livro);
-                }
-            )
+                });
         });
     }
 
@@ -71,21 +68,24 @@ class LivroDao{
             ],
             erro => {
                 if(erro)
-                    return reject('Não foi possível atualizar o livro: ${livro.id}');
+                    return reject(`Não foi possível atualizar o livro: ${livro.id}`);
                 return resolve();
-            })
+            });
         });
     }
 
     remove(id){
+        console.log(`Entrou em remove livro-dao id ${id}`);
+        
         return new Promise((resolve, reject) => {
-            this._db.get(`DELETE FROM livros WHERE id = ?`),
+            this._db.get(`DELETE FROM livros WHERE id = ?`,
             [id],
-            erro => {
-                if(erro) 
-                    return reject('Não foi possível remover o livro: ${id}');
+            (erro) => {
+                if(erro) {
+                    return reject(`Não foi possível remover o livro: ${id}`);
+                }
                 return  resolve();
-            }
+            });
         });
     }
 }

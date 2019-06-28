@@ -5,12 +5,15 @@
     <body>
         <h1> Listagem de livros </h1>
 
-        <table>
+        <table id="livros" >
             <tr>
                 <td>ID</td>
                 <td>Título</td>
+                <td>Preço</td>
+                <td>Editar</td>
+                <td>Remover</td>
             </tr>
-            <tr for (livro in data.livros)>
+            <tr id="livro_${livro.id}" for (livro in data.livros)>
                 <td>${livro.id}</td>
                 <td>${livro.titulo}</td>
                 <td>${livro.preco}</td>
@@ -19,6 +22,6 @@
             </tr>
         </table>
 
-        <script src="./remove-livro.js"></script>
+        <script src="/estatico/js/remove-livro.js"></script>
     </body>
 </html>
